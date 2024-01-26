@@ -8,6 +8,7 @@ import user from "./appwrite/user"
 import authservice from "./appwrite/user"
 import { logOut,login } from "./store/authSlices";
 import Loding from "./components/loding/Loding";
+import Container from "./components/container/Container";
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
 let user = authservice.getCurrentUser()
 .then((userData)=>{
         if(userData){
-          dispatch(login(userData))
+          dispatch(login({userData}))
           setisloggedIn(true)
         }
         else{
@@ -37,11 +38,12 @@ let user = authservice.getCurrentUser()
 
   return (
    
-      <h1>
-        <Header />
-      { loding === true ? <Loding/> : null}
-        <Footer />
-      </h1>
+     
+      <Container>
+        <Header/>
+        <Footer/>
+      </Container>
+     
     
   );
 }
