@@ -2,13 +2,13 @@ import React, { useId } from "react";
 import { forwardRef } from "react";
 
 let Select = forwardRef(({ options, label, className = "", ...props }, ref) => {
-  const id = useId();
+ 
   return (
     <>
       <div>
-        <select className = {`w-full ${className}`} {...props} ref={ref}>
+        <select className = {`px-3 py-2 rounded-lg bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full ${className}`} {...props} ref={ref}>
            { 
-           options.map((value)=>{
+           options?.map((value)=>{
               <option key={options} value={options} className="" ref={ref}>
                 {value}
               </option>
