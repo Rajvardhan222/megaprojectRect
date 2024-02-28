@@ -3,7 +3,7 @@ import Input from '../inputForm/InpurForm'
 import useForm from "react-hook-form"
 import authservice from '../../appwrite/user'
 import Button from "../button/Button"
-import {Login, login} from "../../store/authSlices"
+import { login} from "../../store/authSlices"
 import {useDispatch} from "react-redux"
 import { useRef } from 'react'
 import Logo from "../logo/Logo"
@@ -16,9 +16,9 @@ function LoginForm() {
     const dispatch = useDispatch()
     const {register,handleSubmit} = useForm()
 
-    let  loginUser  = async(userData) => {
+    let  loginUser  = async(userDetail) => {
             try {
-                const session = await authservice.logIn(userData)
+                const session = await authservice.logIn(userDetail)
                 if (session) {
                     let isLoggedin = await authservice.getCurrentUser()
                    isLoggedin && dispatch(login(session))

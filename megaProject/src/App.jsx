@@ -19,9 +19,9 @@ function App() {
 
     useEffect(()=>{
 let user = authservice.getCurrentUser()
-.then((userData)=>{
-        if(userData){
-          dispatch(login({userData}))
+.then((userDetail)=>{
+        if(userDetail){
+          dispatch(login({userDetail}))
           setisloggedIn(true)
         }
         else{
@@ -41,6 +41,7 @@ let user = authservice.getCurrentUser()
      
       <Container>
         <Header/>
+        {/* {Outlet} */}
         <Footer/>
       </Container>
      

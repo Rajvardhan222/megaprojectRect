@@ -7,12 +7,12 @@ function SignUP() {
     let navigate = useNavigate()
     let {register,handleSubmit} = useForm()
     const [error, setError] = useState("")
-    let create = async (userData) => {
+    let create = async (userDetail) => {
       try {
-        let data= authservice.createAccount(userData)
-        if(data){
-         const userData = await authservice.getCurrentUser()
-         dispatch(userData)
+        let Detail= authservice.createAccount(userDetail)
+        if(Detail){
+         const userDetail = await authservice.getCurrentUser()
+         dispatch(userDetail)
         }
         navigate('/')
       } catch (error) {

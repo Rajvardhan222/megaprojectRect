@@ -25,7 +25,7 @@ export class Auth  {
           let user =  await this.account.createEmailSession(email,password)
 
             if(user){
-                //create functionality
+                //create functionality 
             }
             else{
                 console.log(user);
