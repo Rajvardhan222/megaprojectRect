@@ -48,15 +48,15 @@ function Header() {
                     <ul className='flex flex-row '>
 
                 {
-                    navData.map((nav)=>{
-                        <li className='px-4 text-black' key={nav.name} >
+                    navData.map((nav)=>(
+                       
                            nav.isActive === true ? <button
-                           onClick={navigator(nav.url)}
+                           onClick={()=>navigator(nav.url)}
                            className='bg-green-200 text-black p-4'
                            >{nav.name}</button> : null
-                        </li>
+                      
 
-                    })
+                    ))
                 }
 
                 {

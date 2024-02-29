@@ -8,10 +8,13 @@ function SignUP() {
     let {register,handleSubmit} = useForm()
     const [error, setError] = useState("")
     let create = async (userDetail) => {
+        console.log(userDetail);
       try {
-        let Detail= authservice.createAccount(userDetail)
+        let Detail= await authservice.createAccount(userDetail)
+        console.log(Detail);
         if(Detail){
-         const userDetail = await authservice.getCurrentUser()
+         let userDetail = await authservice.getCurrentUser()
+         console.log("user detail",userDetail);
          dispatch(userDetail)
         }
         navigate('/')

@@ -14,7 +14,7 @@ export class Auth  {
     }
     async createAccount({name,email,password}){
         try {
-          await  this.account.create(ID.unique(),email,password,name)
+         return await  this.account.create(ID.unique(),email,password,name)
         } catch (error) {
             console.log(error);
             throw error;
