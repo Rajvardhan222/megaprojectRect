@@ -1,5 +1,5 @@
 import React from 'react'
-import SignUP from '../loginForm/signUp/SignUP'
+import {SignUP} from '../components/index'
 function Signup() {
   return (
     <div className='py-8'>
