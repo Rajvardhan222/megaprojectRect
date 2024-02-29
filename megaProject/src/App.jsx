@@ -9,6 +9,7 @@ import authservice from "./appwrite/user"
 import { logOut,login } from "./store/authSlices";
 import Loding from "./components/loding/Loding";
 import Container from "./components/container/Container";
+import { Outlet } from "react-router-dom";
 
 function App() {
 
@@ -36,17 +37,18 @@ let user = authservice.getCurrentUser()
 
     },[])
 
-  return (
-   
-     
-      <Container>
-        <Header/>
-        {/* {Outlet} */}
-        <Footer/>
-      </Container>
-     
-    
-  );
+    return !loding ? (
+      <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+        <div className='w-full block'>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
+      </div>
+    ) : null
+  
 }
 
 export default App;
