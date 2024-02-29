@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect,useState } from 'react'
-import {Container} from "../container/Container"
+import Container from "../container/Container"
 import appwriteService from '../../appwrite/config'
 import PostCard from '../card/Card'
 

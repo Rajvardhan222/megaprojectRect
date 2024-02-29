@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import {InpurForm,useForm,useDispatch,authservice,Button,Login,useRef,service,useNavigate,Logo} from "../../index"
-import { login } from '../../../store/authSlices'
+import {InpurForm,useForm,useDispatch,authservice,Button,login,useRef,useNavigate,Logo} from "../../index"
+
 import { Link } from 'react-router-dom'
 function SignUP() {
     let dispatch  = useDispatch()

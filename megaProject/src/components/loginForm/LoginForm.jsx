@@ -1,6 +1,6 @@
 import React from 'react'
 import Input from '../inputForm/InpurForm'
-import useForm from "react-hook-form"
+import {useForm} from "react-hook-form"
 import authservice from '../../appwrite/user'
 import Button from "../button/Button"
 import { login} from "../../store/authSlices"
