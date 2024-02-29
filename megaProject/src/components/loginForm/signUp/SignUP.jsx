@@ -13,9 +13,9 @@ function SignUP() {
         let Detail= await authservice.createAccount(userDetail)
         console.log(Detail);
         if(Detail){
-         let userDetail = await authservice.getCurrentUser()
-         console.log("user detail",userDetail);
-         dispatch(userDetail)
+         let CurrentUser = await authservice.getCurrentUser()
+         console.log("CurrentUser detail",CurrentUser);
+         dispatch(login(CurrentUser))
         }
         navigate('/')
       } catch (error) {

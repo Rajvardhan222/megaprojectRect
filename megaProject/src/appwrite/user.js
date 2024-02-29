@@ -36,7 +36,9 @@ export class Auth  {
     }
     async getCurrentUser(){
         try {
-            return await this.account.get()
+           let a =  await this.account.get()
+           console.log(a);
+           return a;
         } catch (error) {
             console.log(error);
         }
