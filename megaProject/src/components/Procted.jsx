@@ -13,8 +13,7 @@ children
 
     useEffect(()=>{
         if(authStatus === false)navigate("/login")
-        else{
-    navigate("/")}
+        
 
     setLoder(false)
     },[authStatus,authincated])

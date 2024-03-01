@@ -1,26 +1,30 @@
 import { Client, Databases, ID, Query, Storage } from "appwrite";
 import conf from "../config/conf";
 export class Service {
+    client;
+    databases;
+    storage;
+    
     constructor(){
         this.client = new Client()
         .setEndpoint(conf.URL) // Your API Endpoint
         .setProject(conf.PRODUCT_ID); 
         this.databases = new Databases(this.client)
-        this.storage = new Storage()
+        this.storage = new Storage(this.client)
     }
-    async createDocument({title,content,featuredImage,slug,status}){
+    async createDocument({title,content,featuredImage,slug,status,user_Id}){
         try {
-           
-           await this.databases.createDocument(
+           console.log(title,content,featuredImage,slug,status,user_Id);
+          return await this.databases.createDocument(
             conf.DATABASE_ID,
             conf.COLLECTION_ID,
-            ID.unique(),
+            slug,
             {
                 title,
                 content,
                 featuredImage,
-                slug,
-                status
+                status,
+                user_Id
             }
            )
         } catch (error) {
@@ -91,7 +95,7 @@ export class Service {
             file
         )
        } catch (error) {
-console.log(error);
+        console.log("Appwrite serive :: uploadFile :: error", error);
        }
     }
 

@@ -2,7 +2,8 @@ import conf from "../config/conf";
 import { Client, Account, ID } from "appwrite";
  
 export class Auth  {
-
+    client;
+    account;
    
 
     constructor (){
@@ -14,7 +15,14 @@ export class Auth  {
     }
     async createAccount({name,email,password}){
         try {
-         return await  this.account.create(ID.unique(),email,password,name)
+        let userAccount= await  this.account.create(ID.unique(),email,password,name)
+
+         if (userAccount) {
+            // call another method
+            return this.logIn({email, password});
+        } else {
+           return  userAccount;
+        }
         } catch (error) {
             console.log(error);
             throw error;
@@ -23,13 +31,9 @@ export class Auth  {
     async logIn({email,password}){
         try {
           let user =  await this.account.createEmailSession(email,password)
+          return user
 
-            if(user){
-                //create functionality 
-            }
-            else{
-                console.log(user);
-            }
+           
         } catch (error) {
             console.log(error)
         }
@@ -37,13 +41,13 @@ export class Auth  {
     async getCurrentUser(){
         try {
            let a =  await this.account.get()
-           console.log(a);
+           console.log('a ',a);
            return a;
         } catch (error) {
-            console.log(error);
+            console.log("Appwrite serive :: getCurrentUser :: error", error);
         }
 
-        return null
+       
     }
 
     async logOut (){

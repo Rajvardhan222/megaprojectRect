@@ -14,8 +14,9 @@ function SignUP() {
         console.log(Detail);
         if(Detail){
          let CurrentUser = await authservice.getCurrentUser()
-         console.log("CurrentUser detail",CurrentUser);
+         if(CurrentUser){ console.log(CurrentUser)}
          dispatch(login(CurrentUser))
+         console.log(CurrentUser)
         }
         navigate('/')
       } catch (error) {

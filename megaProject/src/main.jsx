@@ -40,7 +40,7 @@ let router = createBrowserRouter([
                 ),
             },
             {
-                path: "/all-posts",
+                path: "/all-post",
                 element: (
                     <Procted authincated>
                         {" "}

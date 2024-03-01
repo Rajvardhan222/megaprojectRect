@@ -20,7 +20,9 @@ export default function Post() {
         if (url) {
             appwriteService.getDocument(url).then((post) => {
                 if (post) setPost(post);
-                else navigate("/");
+              
+                else navigate("/");  console.log('post ',post);
+                console.log("img  ",appwriteService.getFilePreview(post.featuredImage));
             });
         } else navigate("/");
     }, [url, navigate]);

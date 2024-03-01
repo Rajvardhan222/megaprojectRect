@@ -25,12 +25,12 @@ function Header() {
             },
             {
                 name:"All Post",
-                url:"/allPost",
+                url:"/all-post",
                 isActive:status
             },
             {
                 name:"Add Post",
-                url:"/addPost",
+                url:"/add-post",
                 isActive:status
             }
         ]
