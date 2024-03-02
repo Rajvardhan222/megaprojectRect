@@ -16,12 +16,14 @@ function LoginForm() {
     const dispatch = useDispatch()
     const {register,handleSubmit} = useForm()
 
-    let  loginUser  = async(userDetail) => {
+    let  loginUser  = async(user) => {
             try {
-                const session = await authservice.logIn(userDetail)
+                const session = await authservice.logIn(user)
+                console.log(session);
                 if (session) {
-                    let isLoggedin = await authservice.getCurrentUser()
-                   isLoggedin && dispatch(login(session))
+                    let userDetail = await authservice.getCurrentUser()
+                    console.log("userD ",userDetail);
+                    dispatch(login({userDetail}))
                    navigate("/")
                 }
             } catch (error) {

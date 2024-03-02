@@ -1,10 +1,14 @@
 import React,{useEffect,useState} from 'react'
 import appwriteService from '../appwrite/config'
-import {Card} from '../components/index'
+import {Card, useNavigate} from '../components/index'
 import {Container} from '../components/index'
+import { useSelector } from 'react-redux'
 
 function Home() {
+   
+    
     const [posts, setPosts] = useState([])
+    let store = useSelector(storage => storage.isUserLoggedIn)
 
     useEffect(() => {
         appwriteService.getDocuments().then((posts) => {
@@ -12,9 +16,9 @@ function Home() {
                 setPosts(posts.documents)
             }
         })
-    }, [])
+    }, [store])
 
-    if (posts.length === 0) {
+    if (posts.length === 0 ) {
         return (
             <div className="w-full py-8 mt-4 text-center">
                 <Container>
@@ -29,7 +33,7 @@ function Home() {
             </div>
         )
     }
-
+   
     return (
         <div className='w-full py-8'>
             <Container>
@@ -43,7 +47,7 @@ function Home() {
             </Container>
         </div>
     )
-
+                    
 }
 
 export default Home

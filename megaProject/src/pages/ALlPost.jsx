@@ -3,6 +3,7 @@ import { useEffect,useState } from 'react'
 import {Container} from "../components/index"
 import appwriteService from '../appwrite/config'
 import {Card as PostCard} from '../components/index'
+import { ID } from 'appwrite'
 
 function ALlPost() {
     let [posts,setPosts] = useState([])
@@ -18,8 +19,8 @@ function ALlPost() {
   return (
     <div className='w-full py-8'>
         <Container>
-            <div className='flex flex-wrap'>  {posts.map((post,index)=>(
-                <div className='p-2 w-1/4'> <PostCard key={index} post={post}/> </div>
+            <div key={ID.unique()} className='flex flex-wrap'>  {posts.map((post,index)=>(
+                <div className='p-2 w-1/4'> <PostCard  {...post}/> </div>
             ))}
             </div>
           

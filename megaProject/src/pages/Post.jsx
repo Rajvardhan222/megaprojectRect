@@ -14,7 +14,7 @@ export default function Post() {
 
     const userData = useSelector((state) => state.user.userDetail);
 
-    const isAuthor = post && userData ? post.userId === userData.$id : false;
+    const isAuthor = post && userData ? post.user_Id === userData.$id : false;
 
     useEffect(() => {
         if (url) {
@@ -22,13 +22,13 @@ export default function Post() {
                 if (post) setPost(post);
               
                 else navigate("/");  console.log('post ',post);
-                console.log("img  ",appwriteService.getFilePreview(post.featuredImage));
+                console.log("img  ",appwriteService.getFile(post.featuredImage));
             });
         } else navigate("/");
     }, [url, navigate]);
 
     const deletePost = () => {
-        appwriteService.deletePost(post.$id).then((status) => {
+        appwriteService.deleteDocument(post.$id).then((status) => {
             if (status) {
                 appwriteService.deleteFile(post.featuredImage);
                 navigate("/");

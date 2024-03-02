@@ -48,12 +48,14 @@ function Header() {
                     <ul className='flex flex-row '>
 
                 {
-                    navData.map((nav)=>(
+                    navData.map((item)=>(
                        
-                           nav.isActive === true ? <button
-                           onClick={()=>navigator(nav.url)}
-                           className='bg-green-200 text-black p-4'
-                           >{nav.name}</button> : null
+                      item.isActive ?  (<li key={item.name}>
+                        <button
+                        onClick={() => navigator(item.url)}
+                        className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'
+                        >{item.name}</button>
+                      </li>) : null
                       
 
                     ))

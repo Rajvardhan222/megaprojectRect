@@ -12,13 +12,13 @@ export class Service {
         this.databases = new Databases(this.client)
         this.storage = new Storage(this.client)
     }
-    async createDocument({title,content,featuredImage,slug,status,user_Id}){
+    async createDocument({title,content,featuredImage,slug,status,user_Id,url}){
         try {
            console.log(title,content,featuredImage,slug,status,user_Id);
           return await this.databases.createDocument(
             conf.DATABASE_ID,
             conf.COLLECTION_ID,
-            slug,
+            url,
             {
                 title,
                 content,
@@ -33,8 +33,8 @@ export class Service {
 
     }
 
-    async updateDocument(Id,{title,content,featuredImage,slug,status}){
-     await  this.databases.updateDocument(
+    async updateDocument(Id,{title,content,featuredImage,status}){
+    return  await  this.databases.updateDocument(
             conf.DATABASE_ID,
             conf.COLLECTION_ID,
             Id,
@@ -42,7 +42,7 @@ export class Service {
                 title,
                 content,
                 featuredImage,
-                slug,
+                
                 status
             }
        )
@@ -63,11 +63,13 @@ export class Service {
     }
     async getDocument(id) {
         try {
-           return await this.databases.getDocument(
+          let document =  await this.databases.getDocument(
                 conf.DATABASE_ID,
                 conf.COLLECTION_ID,
                 id
             )
+            console.log('get ',document);
+            return document;
         } catch (error) {
             console.log(error);
         }
@@ -89,7 +91,7 @@ export class Service {
     //upload Image
     async uploadFile(file){
        try {
-        return this.storage.createFile(
+        return await this.storage.createFile(
             conf.BUCKET_ID,
             ID.unique(),
             file
@@ -101,7 +103,8 @@ export class Service {
 
     async deleteFile(id){
         try {
-            this.storage.deleteFile(
+            console.log("delete file id ",id);
+           await this.storage.deleteFile(
                 conf.BUCKET_ID,
                 id
             )
@@ -111,15 +114,27 @@ export class Service {
         }
         return false
     }
-    async getFilePreview(id){
+     getFilePreview(id){
         try {
-            return this.storage.getFilePreview(
+          return this.storage.getFilePreview(
                 conf.BUCKET_ID,
                 id
             )
+        
         } catch (error) {
             console.log(error);
         }
+    }
+   async getFile(id){
+        try {
+            return await  this.storage.getFile(
+                  conf.BUCKET_ID,
+                  id
+              ).then(file => file)
+          
+          } catch (error) {
+              console.log(error);
+          }
     }
 
 }

@@ -10,31 +10,38 @@ import { useSelector } from 'react-redux'
 
 
 function PostForm({post}) {
+    console.log("Type of post:", typeof post);
+    console.log(post);
     const {register,handleSubmit,watch,setValue,control,getValues} = useForm({
         defaultValues:{
             title:post?.title || '',
-            slug : post?.slug || '',
+            url : post?.url || '',
             content : post?.content || "",
             status : post?.status || 'active'
         }
     })
     const navigate = useNavigate()
     const userData = useSelector(state => state.user.userDetail)
+    console.log("Type of post:", typeof post);
+    console.log(post);
 
     const submit = async (data)=> {
         if (post) {
-          const file =  data.image[0] ? appwriteServices.uploadFile(data.image[0]) : null
-
+            console.log("loded");
+          const file = await data.image[0] ? appwriteServices.uploadFile(data.image[0]) : null
+         let id = file.$id
+            console.log("new featured img lid",file);
           if (file) {
-            appwriteServices.deleteFile(post.featuredImage)
+            console.log(post.featuredImage);
+           await appwriteServices.deleteFile(post.featuredImage)
           }
 
           const dbPost = await appwriteServices.updateDocument(post.$id,{
             ...data,
-             featuredImage: file? file.$id :undefined 
+             featuredImage: file ? id : undefined 
             //  TODO: featured image should be of post
           })
-
+          console.log(dbPost);
           if (dbPost) {
             navigate(`/post/${dbPost.$id}`)
             
@@ -80,7 +87,7 @@ function PostForm({post}) {
     React.useEffect(() => {
         const subscription = watch((value, { name }) => {
             if (name === "title") {
-                setValue("slug", slugTransform(value.title), { shouldValidate: true });
+                setValue("url", slugTransform(value.title), { shouldValidate: true });
             }
         });
 
@@ -105,9 +112,9 @@ function PostForm({post}) {
             label="Slug :"
             placeholder="Slug"
             className="mb-4"
-            {...register("slug", { required: true })}
+            {...register("url", { required: true })}
             onInput={(e) => {
-                setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
+                setValue("url", slugTransform(e.currentTarget.value), { shouldValidate: true });
             }}
         />
 

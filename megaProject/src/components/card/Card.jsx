@@ -18,7 +18,7 @@ function Card({
         </Link>
     </div>
     <div>
-       TODO {/* From where we will get title */}
+       {/* TODO From where we will get title */}
         <h4
          className='text-xl font-bold'
         >{title}</h4>
