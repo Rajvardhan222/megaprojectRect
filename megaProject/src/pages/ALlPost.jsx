@@ -4,17 +4,29 @@ import {Container} from "../components/index"
 import appwriteService from '../appwrite/config'
 import {Card as PostCard} from '../components/index'
 import { ID } from 'appwrite'
+import { useSelector ,useDispatch} from 'react-redux'
+import {posts as allposts} from '../store/authSlices'
 
 function ALlPost() {
     let [posts,setPosts] = useState([])
+    let selector = useSelector(store => store.user.posts)
+    let dispatch = useDispatch()
     useEffect(()=>{
-        appwriteService.getDocuments([])
+     posts.length === 0 &&   appwriteService.getDocuments([])
         .then((posts)=> {
             console.log(posts);
             if (posts) {
                 setPosts(posts.documents)
+                dispatch(allposts(posts.documents))
+
             }
     })
+
+    // store fetch
+
+    // let AllPost = selector(store => store.user.posts)
+    setPosts(selector)
+
     },[])
   return (
     <div className='w-full py-8'>

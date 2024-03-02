@@ -28,14 +28,14 @@ function PostForm({post}) {
     const submit = async (data)=> {
         if (post) {
             console.log("loded");
-          const file = await data.image[0] ? appwriteServices.uploadFile(data.image[0]) : null
+          const file = data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null
          let id = file.$id
             console.log("new featured img lid",file);
           if (file) {
             console.log(post.featuredImage);
-           await appwriteServices.deleteFile(post.featuredImage)
+            appwriteServices.deleteFile(post.featuredImage)
           }
-
+          console.log("data ",data);
           const dbPost = await appwriteServices.updateDocument(post.$id,{
             ...data,
              featuredImage: file ? id : undefined 

@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit"
 let initialState = {
    user:{
     isUserLoggedIn:false,
-    userDetail:null
+    userDetail:null,
+    posts:[]
    }
 }
 
@@ -21,8 +22,11 @@ let authSlice = createSlice({
             state.user.isUserLoggedIn = false
             state.user.userDetail = null
 
+        },
+        posts : (state,action)=> {
+            state.user.posts = action.payload
         }
     }
 })
-export let {login,logOut} = authSlice.actions
+export let {login,logOut,posts} = authSlice.actions
 export default authSlice.reducer

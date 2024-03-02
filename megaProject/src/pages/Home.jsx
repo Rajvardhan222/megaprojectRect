@@ -2,20 +2,26 @@ import React,{useEffect,useState} from 'react'
 import appwriteService from '../appwrite/config'
 import {Card, useNavigate} from '../components/index'
 import {Container} from '../components/index'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { posts as post} from '../store/authSlices'
+
 
 function Home() {
    
-    
+    let dispatch = useDispatch()
     const [posts, setPosts] = useState([])
     let store = useSelector(storage => storage.isUserLoggedIn)
-
+    dispatch(post(posts))
+    let allPosts = useSelector(posts => posts.user.posts)
     useEffect(() => {
-        appwriteService.getDocuments().then((posts) => {
+        posts.length === 0 && appwriteService.getDocuments().then((posts) => {
             if (posts) {
                 setPosts(posts.documents)
             }
         })
+
+        setPosts(allPosts)
+        
     }, [store])
 
     if (posts.length === 0 ) {
