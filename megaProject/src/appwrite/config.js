@@ -12,9 +12,9 @@ export class Service {
         this.databases = new Databases(this.client)
         this.storage = new Storage(this.client)
     }
-    async createDocument({title,content,featuredImage,slug,status,user_Id,url}){
+    async createDocument({title,content,featuredImage,status,user_Id,url,date}){
         try {
-           console.log(title,content,featuredImage,slug,status,user_Id);
+          
           return await this.databases.createDocument(
             conf.DATABASE_ID,
             conf.COLLECTION_ID,
@@ -24,7 +24,8 @@ export class Service {
                 content,
                 featuredImage,
                 status,
-                user_Id
+                user_Id,
+                date
             }
            )
         } catch (error) {
@@ -74,14 +75,13 @@ export class Service {
             console.log(error);
         }
     }
-    async getDocuments(){
+    async getDocuments(query = [ Query.equal("status","active"),
+    Query.orderAsc("date")]){
         try {
             return await this.databases.listDocuments(
                 conf.DATABASE_ID,
                 conf.COLLECTION_ID,
-                [
-                    Query.equal("status","Active")
-                ]
+               query
             )
         } catch (error) {
             console.log(error);

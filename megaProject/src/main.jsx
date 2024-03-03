@@ -13,6 +13,7 @@ import ALlPosts from './pages/ALlPost.jsx'
 import AddPost from './pages/AddPost.jsx'
 import EditPost from './pages/EditPost.jsx'
 import Post from './pages/Post.jsx'
+import MyPost from './pages/MyPost.jsx'
 
 let router = createBrowserRouter([
         {   path:'/',
@@ -70,6 +71,10 @@ let router = createBrowserRouter([
                 path: "/post/:url",
                 element: <Post />,
             },
+            {
+                path: '/my-posts',
+                element : <MyPost/>
+            }
               
             ]
         }

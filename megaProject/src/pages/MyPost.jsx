@@ -10,10 +10,11 @@ import Select from '../components/select/Select'
 import { useForm } from '../components/index'
 import { Query } from 'appwrite'
 
-function ALlPost() {
+function MyPost() {
     let sorting
     let [posts,setPosts] = useState([])
     let selector = useSelector(store => store.user.posts)
+    let data = useSelector(store => store.user.userDetail)
     let dispatch = useDispatch()
     useEffect(()=>{
         let initQuery
@@ -27,8 +28,11 @@ function ALlPost() {
         .then((posts)=> {
             console.log(posts);
             if (posts) {
-                setPosts(posts.documents)
-                dispatch(allposts(posts.documents))
+               let mypost = posts.documents.filter(doc => doc.user_Id === data.$id)
+               setPosts(mypost)
+               console.log(mypost);
+                
+                dispatch(allposts(mypost));
 
             }
     })
@@ -36,37 +40,37 @@ function ALlPost() {
     // store fetch
 
     // let AllPost = selector(store => store.user.posts)
-    setPosts(selector)
+   
      sorting = localStorage.getItem('sort')
     },[])
-    let {register,handleSubmit,getValues,setValue} = useForm()
+    let {register,handleSubmit,setValue} = useForm()
     let SortBy =['Newest','Oldest']
-    let submit = (data)=>{
-        console.log(data);
-       
-
-        
-        let query
-        if(data.sort == 'Newest'){
-             query = [ Query.equal("status","active"),
-        Query.orderAsc("date")]
+    let submit = (value) => {
+        console.log(value);
+    
+        let query;
+        if (value.sort == 'Newest') {
+            query = [Query.equal("status", "active"), Query.orderAsc("date")];
         }
-        if(data.sort == 'Oldest'){
-            query = [ Query.equal("status","active"),
-        Query.orderDesc("date")]
+        if (value.sort == 'Oldest') {
+            query = [Query.equal("status", "active"), Query.orderDesc("date")];
         }
         appwriteService.getDocuments(query)
-        .then((posts)=> {
-            console.log(posts);
-            if (posts) {
-                setPosts(posts.documents)
-                dispatch(allposts(posts.documents))
-
-            }
-    })
+            .then((posts) => {
+                console.log(posts);
+                if (posts) {
+                    console.log(value.$id);
+                    let mypostx = posts.documents.filter(doc => doc.user_Id == data.$id)
+                    setPosts(mypostx)
+                    console.log(mypostx);
+    
+                    dispatch(allposts(mypostx));
+                }
+            })
         console.log('this');
-        localStorage.setItem('sort', data.sort);
+        localStorage.setItem('sort', value.sort);
     }
+    
   return (
     <div className='w-full py-8'>
         <Container>
@@ -93,4 +97,4 @@ function ALlPost() {
   )
 }
 
-export default ALlPost
+export default MyPost

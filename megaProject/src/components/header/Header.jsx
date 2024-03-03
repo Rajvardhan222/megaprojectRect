@@ -32,6 +32,10 @@ function Header() {
                 name:"Add Post",
                 url:"/add-post",
                 isActive:status
+            },{
+                name: "My Posts",
+                url:"/my-posts",
+                isActive:status
             }
         ]
     return (

@@ -14,15 +14,18 @@ function Home() {
     dispatch(post(posts))
     let allPosts = useSelector(posts => posts.user.posts)
     useEffect(() => {
-        posts.length === 0 && appwriteService.getDocuments().then((posts) => {
+        allPosts.length === 0 && appwriteService.getDocuments().then((posts) => {
             if (posts) {
                 setPosts(posts.documents)
+                dispatch(post(posts))
+                
             }
         })
 
         setPosts(allPosts)
         
     }, [store])
+    
 
     if (posts.length === 0 ) {
         return (

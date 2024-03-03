@@ -13,17 +13,22 @@ export default function Post() {
     const navigate = useNavigate();
 
     const userData = useSelector((state) => state.user.userDetail);
+    let AllPost = useSelector(state => state.user.posts)
 
     const isAuthor = post && userData ? post.user_Id === userData.$id : false;
 
     useEffect(() => {
         if (url) {
-            appwriteService.getDocument(url).then((post) => {
+           let currentPost =  AllPost?.find(post => post.$id === url)
+
+           !currentPost && appwriteService.getDocument(url).then((post) => {
                 if (post) setPost(post);
               
                 else navigate("/");  console.log('post ',post);
                 console.log("img  ",appwriteService.getFile(post.featuredImage));
             });
+
+            setPost(currentPost)
         } else navigate("/");
     }, [url, navigate]);
 

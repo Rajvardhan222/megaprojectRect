@@ -36,9 +36,15 @@ function PostForm({post}) {
             appwriteServices.deleteFile(post.featuredImage)
           }
           console.log("data ",data);
+          let now = new Date()
+         let Cdate =  now.getTime()
+         console.log(Cdate);
           const dbPost = await appwriteServices.updateDocument(post.$id,{
             ...data,
-             featuredImage: file ? id : undefined 
+             featuredImage: file ? id : undefined ,
+             date : Cdate
+             
+
             //  TODO: featured image should be of post
           })
           console.log(dbPost);
@@ -50,19 +56,21 @@ function PostForm({post}) {
 
 
         else{
+            let date = new Date()
             console.log(data);
             const file = await appwriteServices.uploadFile(data.image[0])
             console.log('file ',file);
 
              if (file) {
                const fileId =  file.$id
-
+              
+                let Cdate =  date.getTime()
                data.featuredImage = fileId
-               console.log(data.featuredImage);
-                console.log('data ',data);
+              console.log(typeof Cdate)
               const dbPost = await appwriteServices.createDocument({
                 ...data,
-                user_Id: userData.$id
+                user_Id: userData.$id,
+                date :Cdate
                })
                console.log('user_Id', userData.$id);
                console.log('dbpost ',dbPost);
