@@ -15,7 +15,7 @@ function PostForm({post}) {
     const {register,handleSubmit,watch,setValue,control,getValues} = useForm({
         defaultValues:{
             title:post?.title || '',
-            url : post?.url || '',
+            url : post?.$id || '',
             content : post?.content || "",
             status : post?.status || 'active'
         }
@@ -29,7 +29,7 @@ function PostForm({post}) {
         if (post) {
             console.log("loded");
           const file = data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null
-         let id = file.$id
+         let id = file && file.$id
             console.log("new featured img lid",file);
           if (file) {
             console.log(post.featuredImage);
@@ -38,12 +38,28 @@ function PostForm({post}) {
           console.log("data ",data);
           let now = new Date()
          let Cdate =  now.getTime()
+         let hour = now.getHours();
+         let min = now.getMinutes();
+         
+         let period = 'AM';
+         
+         if (hour >= 12) {
+             period = 'PM';
+             hour = hour % 12; // Convert to 12-hour format
+         }
+         
+         // Ensure hour is not 0 for 12 AM
+         if (hour === 0) {
+             hour = 12;
+         }
+
+        let time = `updated on ${hour} : ${min} : ${period} `;
          console.log(Cdate);
           const dbPost = await appwriteServices.updateDocument(post.$id,{
             ...data,
              featuredImage: file ? id : undefined ,
-             date : Cdate
-             
+             date : Cdate,
+             time :time
 
             //  TODO: featured image should be of post
           })
@@ -63,14 +79,37 @@ function PostForm({post}) {
 
              if (file) {
                const fileId =  file.$id
-              
+              let now = new Date()
                 let Cdate =  date.getTime()
+                let hour = now.getHours();
+                let min = now.getMinutes();
+                
+                let period = 'AM';
+                
+                if (hour >= 12) {
+                    period = 'PM';
+                    hour = hour % 12; // Convert to 12-hour format
+                }
+                
+                // Ensure hour is not 0 for 12 AM
+                if (hour === 0) {
+                    hour = 12;
+                }
+                if(hour < 10){
+                    hour = `0${hour}`
+                }
+                if(min < 10){
+                    min = `0${min}`
+                }
+       
+               let time = `${hour} : ${min} : ${period}`;
                data.featuredImage = fileId
               console.log(typeof Cdate)
               const dbPost = await appwriteServices.createDocument({
                 ...data,
                 user_Id: userData.$id,
-                date :Cdate
+                date :Cdate,
+                time:time
                })
                console.log('user_Id', userData.$id);
                console.log('dbpost ',dbPost);

@@ -6,7 +6,8 @@ import {Link} from "react-router-dom"
 function Card({
     $id,
     title,
-    featuredImage
+    featuredImage,
+    time
 
 }) {
   return (
@@ -22,6 +23,12 @@ function Card({
         <h4
          className='text-xl font-bold'
         >{title}</h4>
+
+        <div>
+            <h3>
+                {time}
+            </h3>
+        </div>
     </div>
    </div>
   )

@@ -12,7 +12,7 @@ export class Service {
         this.databases = new Databases(this.client)
         this.storage = new Storage(this.client)
     }
-    async createDocument({title,content,featuredImage,status,user_Id,url,date}){
+    async createDocument({title,content,featuredImage,status,user_Id,url,date,time}){
         try {
           
           return await this.databases.createDocument(
@@ -25,7 +25,8 @@ export class Service {
                 featuredImage,
                 status,
                 user_Id,
-                date
+                date,
+                time
             }
            )
         } catch (error) {
