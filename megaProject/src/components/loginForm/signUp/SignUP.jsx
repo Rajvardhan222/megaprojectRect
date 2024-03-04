@@ -2,27 +2,33 @@ import React, { useState } from 'react'
 import {InpurForm,useForm,useDispatch,authservice,Button,login,useRef,useNavigate,Logo} from "../../index"
 
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 function SignUP() {
     let dispatch  = useDispatch()
     let navigate = useNavigate()
     let {register,handleSubmit} = useForm()
+    let store = useSelector(store=> store.user.userDetail)
     const [error, setError] = useState("")
-    let create = async (userDetail) => {
-        console.log(userDetail);
+    let create = async (user) => {
+        console.log(user);
       try {
-        let Detail= await authservice.createAccount(userDetail)
+        let Detail= await authservice.createAccount(user)
         console.log(Detail);
         if(Detail){
-         let CurrentUser = await authservice.getCurrentUser()
-         if(CurrentUser){ console.log(CurrentUser)}
-         dispatch(login(CurrentUser))
-         console.log(CurrentUser)
+         let userDetail = await authservice.getCurrentUser()
+         if(userDetail){ console.log(userDetail)}
+         dispatch(login({userDetail}))
+         console.log(userDetail)
+        //  bring from store
+       navigate('/display')
         }
-        navigate('/')
+        
       } catch (error) {
         setError(error.message)
       }
     }
+    
+   
   return (
     <div className="flex items-center justify-center">
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>

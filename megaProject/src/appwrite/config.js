@@ -35,7 +35,50 @@ export class Service {
 
     }
 
-    async updateDocument(Id,{title,content,featuredImage,status}){
+    async createDisplayName({displayName},userId){
+        try {
+            console.log(displayName);
+          return await  this.databases.createDocument(
+                conf.DATABASE_ID,
+                conf.COLLECTION_ID_DISPLAY_NAME,
+                userId,
+                {
+                    displayName,
+                    userId
+                }
+            )
+        } catch (error) {
+            console.log("config :: createDisplayName :: error ",error);
+        }
+    }
+
+    async getDisplayName(id) {
+        try {
+          let document =  await this.databases.getDocument(
+                conf.DATABASE_ID,
+                conf.COLLECTION_ID_DISPLAY_NAME,
+                id
+            )
+            console.log('get ',document);
+            return document;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+    async getDisplayNames(query = [ Query.equal("status","active"),
+    Query.orderAsc("date")]){
+        try {
+            return await this.databases.listDocuments(
+                conf.DATABASE_ID,
+                conf.COLLECTION_ID_DISPLAY_NAME,
+               query
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async updateDocument(Id,{title,content,featuredImage,status,time}){
     return  await  this.databases.updateDocument(
             conf.DATABASE_ID,
             conf.COLLECTION_ID,
@@ -44,7 +87,7 @@ export class Service {
                 title,
                 content,
                 featuredImage,
-                
+                time,
                 status
             }
        )

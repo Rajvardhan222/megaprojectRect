@@ -14,7 +14,7 @@ import AddPost from './pages/AddPost.jsx'
 import EditPost from './pages/EditPost.jsx'
 import Post from './pages/Post.jsx'
 import MyPost from './pages/MyPost.jsx'
-
+import DisplayName from './pages/DisplayName.jsx'
 let router = createBrowserRouter([
         {   path:'/',
             element:<App/>,
@@ -74,6 +74,10 @@ let router = createBrowserRouter([
             {
                 path: '/my-posts',
                 element : <MyPost/>
+            },
+            {
+                path : '/display',
+                element : <DisplayName />,
             }
               
             ]

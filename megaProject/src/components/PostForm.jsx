@@ -53,13 +53,14 @@ function PostForm({post}) {
              hour = 12;
          }
 
-        let time = `updated on ${hour} : ${min} : ${period} `;
+        let tim = `updated on ${hour} : ${min} : ${period} `;
+        console.log(tim);
          console.log(Cdate);
           const dbPost = await appwriteServices.updateDocument(post.$id,{
             ...data,
              featuredImage: file ? id : undefined ,
              date : Cdate,
-             time :time
+             time :tim
 
             //  TODO: featured image should be of post
           })
@@ -83,7 +84,9 @@ function PostForm({post}) {
                 let Cdate =  date.getTime()
                 let hour = now.getHours();
                 let min = now.getMinutes();
-                
+                let day = now.getDate();
+                let month = now.getMonth();
+                let year = now.getFullYear();
                 let period = 'AM';
                 
                 if (hour >= 12) {

@@ -16,7 +16,7 @@ export default function Post() {
     let AllPost = useSelector(state => state.user.posts)
 
     const isAuthor = post && userData ? post.user_Id === userData.$id : false;
-
+    const [creator, setCreator] = useState(null);
     useEffect(() => {
         if (url) {
            let currentPost =  AllPost?.find(post => post.$id === url)
@@ -29,9 +29,18 @@ export default function Post() {
             });
 
             setPost(currentPost)
+
+          
+         
+            
         } else navigate("/");
     }, [url, navigate]);
-
+    post && appwriteService.getDisplayName(post.user_Id).then((displayNames) => {
+        console.log('display name ',displayNames);
+      
+        setCreator(displayNames.displayName);
+        
+    })
     const deletePost = () => {
         appwriteService.deleteDocument(post.$id).then((status) => {
             if (status) {
@@ -40,7 +49,7 @@ export default function Post() {
             }
         });
     };
-
+    
     return post ? (
         <div className="py-8">
             <Container>
@@ -66,6 +75,8 @@ export default function Post() {
                 </div>
                 <div className="w-full mb-6">
                     <h1 className="text-2xl font-bold">{post.title}</h1>
+                    <h2>Created By : {creator}</h2>
+                    
                 </div>
                 <div className="browser-css">
                     {parse(post.content)}
